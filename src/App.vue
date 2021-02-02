@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import Header from "./components/Header"
-import Footer from "./components/Footer"
+import Header from "./components/shared/Header"
+import Footer from "./components/shared/Footer"
 
 export default {
   components:{Header, Footer}
@@ -24,16 +24,5 @@ export default {
   color: #2c3e50;
 }
 
-#nav {
-  padding: 30px;
-}
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>

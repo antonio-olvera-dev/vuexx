@@ -1,6 +1,6 @@
 <template>
-  <div class="card-receip">
-<h1>Receip</h1>
+  <div class="pokedex">
+      <h1>Pokédex</h1>
   </div>
 </template>
 
@@ -10,10 +10,6 @@ export default {
 }
 </script>
 
-<style scoped>
-
-.card-receip{
-
-}
+<style>
 
 </style>

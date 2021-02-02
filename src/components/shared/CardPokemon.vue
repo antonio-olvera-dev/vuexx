@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-<h1>Home</h1>
+  <div class="card-pokemon">
+<h1>pokemon</h1>
   </div>
 </template>
 
@@ -11,9 +11,9 @@ export default {
 </script>
 
 <style scoped>
-.home{
-  width: 100%;
-  height: 100%;
+
+.card-pokemon{
 
 }
+
 </style>
