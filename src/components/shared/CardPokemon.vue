@@ -20,23 +20,17 @@ export default {
   props: ["name"],
   data() {
     return {
-       //url: require("@/assets/mari.jpg"),
-      url:"https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg",
+       url: require("@/assets/mari.jpg"),
     };
   },
-  created (){
+  async created (){
   try {
-        console.log(this.url);
-        // const dat = await callApi.getPokemon(name);
-        // console.log(dat);
+         const dat = await callApi.getPokemon(this.name);
+         const ur = dat.sprites.other['official-artwork'].front_default;
+         this.url = ur;
       } catch (error) {}
   },
-  mounted () {
 
-  },
-  async beforeCreate() {
-    
-  },
 
   methods:{
     async img(){
