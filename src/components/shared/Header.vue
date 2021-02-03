@@ -26,7 +26,7 @@
                 size="sm"
                 class="mr-sm-2"
                 placeholder="Search"
-              ></b-form-input>
+              />
               <div v-if="pokeFilterBlock" class="auto-head">
                 <div class="auto-head-in">
                   <div  class="auto-head-name" v-for="name in pokeFilter"
@@ -79,10 +79,11 @@ export default {
       const data = await callApi.getAllPokemon();
       for (const it of data.results) {
         this.allPokemon.push(it.name);
-      }
+      } 
       this.allPokemon = this.allPokemon.sort()
       this.pokeFilter = this.allPokemon
-      console.log(this.allPokemon);
+    
+    
     } catch (error) {
       console.log(error);
     }
@@ -95,7 +96,7 @@ export default {
   methods: {
     async search() {
       try {
-        const poke = await callApi.getPokemon(this.query);
+       // const poke = await callApi.getPokemon(this.query);
         console.log(poke);
       } catch (error) {
         console.log(error);
@@ -111,13 +112,12 @@ export default {
       this.pokeFilterBlock = bol;
     },
     filterPoke(ev) {
-      const newArray = []
-      for (const item of this.allPokemon) {
-        if (item.search(ev.target.value.toLowerCase()) > -1) {
-          newArray.push(item)
-        }
+      
+      if(ev.target.value.length == 1 && ev.key == "Backspace"){
+       return this.pokeFilter = this.allPokemon
       }
-      this.pokeFilter = newArray
+
+      this.pokeFilter = this.allPokemon.filter(function (item) { return item.toLowerCase().includes(ev.target.value.toLowerCase())});
     },
   },
 };
