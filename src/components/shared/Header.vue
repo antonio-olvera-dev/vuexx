@@ -98,14 +98,11 @@ export default {
 </script>
 
 <style scoped>
-.header{
-  
-}
-
 a{
   text-decoration: none;
   color: rgba(255, 255, 255, 0.733);
 }
+
 a:hover{
   text-decoration: none;
   color: rgba(255, 255, 255, 0.5);
