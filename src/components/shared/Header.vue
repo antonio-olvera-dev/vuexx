@@ -18,7 +18,8 @@
             <!-- ---Input--- -->
             <div class="input-header">
               <b-form-input
-              autocomplete="off"
+              id="input-header"
+                autocomplete="off"
                 @focus="blockFilter(true)"
                 @blur="blockFilter(false)"
                 @keydown="filterPoke"
@@ -27,11 +28,16 @@
                 class="mr-sm-2"
                 placeholder="Search"
               />
+              <!-- ---Autocomplete--- -->
               <div v-if="pokeFilterBlock" class="auto-head">
                 <div class="auto-head-in">
-                  <div  class="auto-head-name" v-for="name in pokeFilter"
-                  v-bind:key="name">
-                    <p v-on:click="select(name)" >{{name}}</p>
+                  <div
+                    v-on:click="select(name.name)"
+                    class="auto-head-name"
+                    v-for="name in pokemonFilter"
+                    v-bind:key="name.name"
+                  >
+                    <p>{{ name.name }}</p>
                   </div>
                 </div>
               </div>
@@ -45,16 +51,6 @@
               >Search</b-button
             >
           </b-nav-form>
-
-          <b-nav-item-dropdown v-bind:text="namePoke" right>
-            <b-dropdown-item
-              href="#"
-              v-for="pokemon in allPokemon"
-              v-bind:key="pokemon"
-              v-on:click="select(pokemon)"
-              >{{ pokemon }}</b-dropdown-item
-            >
-          </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -62,63 +58,49 @@
 </template>
 
 <script>
-import { callApi } from "./../../services/CallApi";
-
+import { mapActions, mapState } from "vuex";
 export default {
   data() {
     return {
       query: "",
-      allPokemon: [],
-      pokeFilter: [],
       pokeFilterBlock: false,
-      namePoke: "Name Pokemon",
     };
   },
-  async beforeCreate() {
-    try {
-      const data = await callApi.getAllPokemon();
-      for (const it of data.results) {
-        this.allPokemon.push(it.name);
-      } 
-      this.allPokemon = this.allPokemon.sort()
-      this.pokeFilter = this.allPokemon
-    
-    
-    } catch (error) {
-      console.log(error);
-    }
+  computed: {
+    ...mapState(["allPokemon", "pokemonFilter"]),
   },
-  mounted() {
-    const element = document.getElementsByClassName("dropdown-menu");
-    element[0].style.maxHeight = "40vh";
-    element[0].style.overflow = "scroll";
-  },
+ 
   methods: {
     async search() {
       try {
-       // const poke = await callApi.getPokemon(this.query);
+        // const poke = await callApi.getPokemon(this.query);
         console.log(poke);
       } catch (error) {
         console.log(error);
       }
     },
     select(name) {
-      console.log(name);
-      this.namePoke = name;
-      this.query = name;
+      this.query = name
     },
 
     blockFilter(bol) {
-      this.pokeFilterBlock = bol;
+      setTimeout(() => {
+        this.pokeFilterBlock = bol;
+      }, 200);
     },
     filterPoke(ev) {
-      
-      if(ev.target.value.length == 1 && ev.key == "Backspace"){
-       return this.pokeFilter = this.allPokemon
+    
+      if (ev.target.value.length == 1 && ev.key == "Backspace") {
+        return (this.actionChangeFilter(this.allPokemon));
       }
 
-      this.pokeFilter = this.allPokemon.filter(function (item) { return item.toLowerCase().includes(ev.target.value.toLowerCase())});
+      const newarray = this.allPokemon.filter(function(item) {
+        return item.toLowerCase().includes(ev.target.value.toLowerCase());
+      });
+      this.actionChangeFilter(newarray);
     },
+
+    ...mapActions([ 'actionChangeFilter'])
   },
 };
 </script>
@@ -142,18 +124,22 @@ a:hover {
   margin-top: 2.1em;
   height: 35vh;
   width: 10.8em;
-  
+  z-index: 10;
   position: absolute;
 }
 
 .auto-head-in {
+  z-index: 10;
   background-color: white;
   height: 30vh;
   margin-right: 0.5em;
   margin-top: 0.3em;
   border-radius: 0.4em;
-overflow: scroll;
+  overflow: hidden auto;
   box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.384);
+}
+.auto-head-in:hover {
+  cursor: pointer;
 }
 
 .auto-head-name {
