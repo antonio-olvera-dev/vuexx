@@ -36,7 +36,7 @@
 
             <b-dropdown-item href="#"  v-for="pokemon in allPokemon"
             v-bind:key="pokemon"
-             v-on:click="select(pokemon)" >{{pokemon}}</b-dropdown-item>
+             v-on:click="select(pokemon)">{{pokemon}}</b-dropdown-item>
 
           </b-nav-item-dropdown>
 
@@ -54,9 +54,9 @@ import { callApi } from "./../../services/CallApi";
 export default {
   data() {
     return {
-       query: "",
-    allPokemon: [],
-    namePoke: "Name Pokemon"
+      query: "",
+      allPokemon: [],
+      namePoke: "Name Pokemon",
     }
   },
  async beforeCreate(){
@@ -71,7 +71,14 @@ export default {
       }
 
   },
+  mounted() {
+    console.log('mounted: ')
+   //  console.log(this.$refs["pokemonList"])
 
+    const element = document.getElementsByClassName('dropdown-menu');
+    element[0].style.maxHeight = '100vh'
+    element[0].style.overflow = 'scroll'  
+  },
   methods: {
     async search()  {
      try {
@@ -103,6 +110,5 @@ a:hover{
   text-decoration: none;
   color: rgba(255, 255, 255, 0.5);
 }
-
 
 </style>
