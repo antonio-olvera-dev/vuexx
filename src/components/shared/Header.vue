@@ -32,24 +32,18 @@
               <div v-if="pokeFilterBlock" class="auto-head">
                 <div class="auto-head-in">
                   <div
-                    v-on:click="select(name.name)"
+                    v-on:click="select(name)"
                     class="auto-head-name"
                     v-for="name in pokemonFilter"
-                    v-bind:key="name.name"
+                    v-bind:key="name"
                   >
-                    <p>{{ name.name }}</p>
+                    <p>{{ name }}</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <b-button
-              v-on:click="search"
-              size="sm"
-              class="my-2 my-sm-0"
-              type="button"
-              >Search</b-button
-            >
+
           </b-nav-form>
         </b-navbar-nav>
       </b-collapse>
@@ -71,14 +65,7 @@ export default {
   },
  
   methods: {
-    async search() {
-      try {
-        // const poke = await callApi.getPokemon(this.query);
-        console.log(poke);
-      } catch (error) {
-        console.log(error);
-      }
-    },
+
     select(name) {
       this.query = name
     },
@@ -89,7 +76,7 @@ export default {
       }, 200);
     },
     filterPoke(ev) {
-    
+   
       if (ev.target.value.length == 1 && ev.key == "Backspace") {
         return (this.actionChangeFilter(this.allPokemon));
       }

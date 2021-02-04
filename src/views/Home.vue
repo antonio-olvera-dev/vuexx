@@ -10,8 +10,8 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-3" v-for="poke in pokemon" v-bind:key="poke.name">
-          <CardPokemon class="mt-5 mb-5" :name="poke.name" />
+        <div class="col-3" v-for="poke in allPokemon" v-bind:key="poke">
+          <CardPokemon class="mt-5 mb-5" :name="poke" />
         </div>
       </div>
     </div>
@@ -26,7 +26,6 @@ import { mapState, mapActions } from "vuex";
 export default {
   data() {
     return {
-      pokemon: [],
       count: 0,
       cuan: 40,
     };
@@ -34,10 +33,11 @@ export default {
 
   async mounted() {
     const pok = await callApi.getAllPokemon(this.cuan);
+    const newPok = pok.results.map((po) => {
+      return po.name;
+    });
     this.count = pok.count;
-    this.pokemon = pok.results;
-
-    this.actionLoadPokemon(this.pokemon);
+    this.actionLoadPokemon(newPok);
   },
   computed: {
     ...mapState(["allPokemon"]),
@@ -48,7 +48,10 @@ export default {
       try {
         const num2 = num - 1;
         const pokemm = await callApi.getAllPokemon(this.cuan, num2 * 40);
-        this.pokemon = pokemm.results;
+        const newPok = pokemm.results.map((po) => {
+          return po.name;
+        });
+         this.actionLoadPokemon(newPok);
       } catch (error) {
         console.log(error);
       }
