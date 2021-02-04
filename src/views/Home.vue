@@ -10,7 +10,7 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-3" v-for="poke in allPokemon" v-bind:key="poke">
+        <div class="col-3" v-for="poke in pokemonFilter" v-bind:key="poke">
           <CardPokemon class="mt-5 mb-5" :name="poke" />
         </div>
       </div>
@@ -40,7 +40,7 @@ export default {
     this.actionLoadPokemon(newPok);
   },
   computed: {
-    ...mapState(["allPokemon"]),
+    ...mapState(["allPokemon", "pokemonFilter"]),
   },
   methods: {
     ...mapActions(["actionLoadPokemon"]),
