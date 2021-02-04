@@ -10,7 +10,7 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-3" v-for="poke in pokemonFilter" v-bind:key="poke">
+        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 d-flex justify-content-center" v-for="poke in pokemonFilter" v-bind:key="poke">
           <CardPokemon class="mt-5 mb-5" :name="poke" />
         </div>
       </div>
